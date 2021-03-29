@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import Form from "./components/Form/Form";
+import styled from "styled-components";
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  width: 100%;
+  background-image: linear-gradient(#89f3ff, #020024);
+`;
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container className="App">
+      <Form />
+    </Container>
   );
 }
 
