@@ -27,6 +27,24 @@ Examples:
 [19, 2, 42, 18] should return 61
 [61, 32, 51] should return 93
 
+Third part of the code challenge is the Credit card form for submitting payments:
+
+### Create a credit card form for submitting payments. Use either React or Vue and bundle it using either webpack or parcel and deploy it to a cloud provider of your choosing. If you're unsure we can recommend Netlify or Heroku. Focus should be on validation and ease of use.
+
+### Consider what we can validate / detect without making a request to the payment server.
+
+### Include unit / e2e tests
+
+### Bundle your module with webpack or parcel.
+
+I have used `npx creacte-react-app` for this project since I needed to get started fast and finish the project in a short amount of time.
+
+### TODO's:
+
+- Include unit/e2e tests since I did not manage to add these during the time interval.
+
+# ************************\_\_\_\_************************
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
