@@ -43,7 +43,9 @@ I have used `npx creacte-react-app` for this project since I needed to get start
 
 - Include unit/e2e tests since I did not manage to add these during the time interval.
 
-# ************************\_\_\_\_************************
+- Overall refactor of code and architecture of the application.
+
+# **********\*\*\*\***********\_\_\_\_**********\*\*\*\***********
 
 # Getting Started with Create React App
 
