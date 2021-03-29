@@ -1,7 +1,17 @@
 import { useState, useEffect } from "react";
+import {
+  formatCreditCardNumber,
+  formatCVC,
+  formatExpirationDate,
+} from "./format";
 
 export const useForm = (callback, validate) => {
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState({
+    cvc: "",
+    expiry: "",
+    name: "",
+    number: "",
+  });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -17,16 +27,23 @@ export const useForm = (callback, validate) => {
     setIsSubmitting(true);
   };
 
-  const handleChange = (event) => {
-    event.persist();
-    setValues((values) => ({
+  const handleInputChange = ({ target, persist }) => {
+    persist();
+    if (target.name === "number") {
+      target.value = formatCreditCardNumber(target.value);
+    } else if (target.name === "expiry") {
+      target.value = formatExpirationDate(target.value);
+    } else if (target.name === "cvc") {
+      target.value = formatCVC(target.value);
+    }
+    setValues({
       ...values,
-      [event.target.name]: event.target.value,
-    }));
+      [target.name]: target.value,
+    });
   };
 
   return {
-    handleChange,
+    handleInputChange,
     handleSubmit,
     values,
     errors,

@@ -9,7 +9,7 @@ const Container = styled.div`
     perspective: 1000px;
     width: 290px;
     position: absolute;
-    top: -40px;
+    top: -60px;
     left: 0;
     right: 0;
   }

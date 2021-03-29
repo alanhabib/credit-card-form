@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import Card from "../Card";
 import styled from "styled-components";
-import {
-  formatCreditCardNumber,
-  formatCVC,
-  formatExpirationDate,
-} from "../../utils/format";
+import { useForm } from "../../utils/hooks";
+import { validate } from "../../utils/validate";
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 40%;
+  height: 60%;
   width: 100%;
   position: relative;
 `;
@@ -24,7 +21,7 @@ const FormWrapper = styled.form`
   flex-direction: column;
   background-color: white;
   height: 100%;
-  max-height: 500px;
+  max-height: 700px;
   width: 100%;
   max-width: 460px;
   border-radius: 10px;
@@ -52,47 +49,64 @@ const Row = styled.div`
   justify-content: center;
   align-items: center;
   width: 80%;
+  margin-bottom: 20px;
   & > input {
-    margin: 20px 8px 60px 8px;
+    margin: 20px 8px 0 8px;
   }
 `;
 
+const JsonWrapper = styled.div`
+  width: 80%;
+  margin-bottom: 12px;
+  & > pre {
+    position: relative;
+    border: 1px solid #ccc;
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+  }
+`;
+
+const Error = styled.p`
+  color: red;
+  text-align: center;
+  margin: 0;
+  padding: 4px;
+`;
+
+const Button = styled.button`
+  padding: 12px 32px;
+  margin-top: 12px;
+  border-radius: 10px;
+  background-color: #89f3ff;
+  border: 1px solid lightGrey;
+`;
+
 const Form = () => {
-  const [data, setData] = useState({
-    cvc: "",
-    expiry: "",
-    name: "",
-    number: "",
-  });
+  const { values, errors, handleInputChange, handleSubmit } = useForm(
+    submit,
+    validate
+  );
 
   const [inputFocused, setInputFocused] = useState("");
 
-  const handleInputChange = ({ target }) => {
-    if (target.name === "number") {
-      target.value = formatCreditCardNumber(target.value);
-    } else if (target.name === "expiry") {
-      target.value = formatExpirationDate(target.value);
-    } else if (target.name === "cvc") {
-      target.value = formatCVC(target.value);
-    }
-    setData({
-      ...data,
-      [target.name]: target.value,
-    });
-  };
+  function submit() {
+    console.log("### SUBMIT PAYMENT");
+  }
 
   return (
     <Wrapper>
       <Card
-        number={data?.number}
-        name={data?.name}
-        expiry={data?.expiry}
-        cvc={data?.cvc}
+        number={values?.number}
+        name={values?.name}
+        expiry={values?.expiry}
+        cvc={values?.cvc}
         focused={inputFocused}
       />
       <FormWrapper>
         <Input
-          value={data.number || ""}
+          value={values.number || ""}
           autoFocus
           onFocus={(e) => setInputFocused(e.currentTarget.name)}
           type="tel"
@@ -102,7 +116,7 @@ const Form = () => {
           required
         />
         <Input
-          value={data.name || ""}
+          value={values.name || ""}
           autoFocus
           onFocus={(e) => setInputFocused(e.currentTarget.name)}
           type="text"
@@ -113,7 +127,7 @@ const Form = () => {
         />
         <Row>
           <Input
-            value={data.expiry || ""}
+            value={values.expiry || ""}
             autoFocus
             onFocus={(e) => setInputFocused(e.currentTarget.name)}
             type="tel"
@@ -124,7 +138,7 @@ const Form = () => {
             required
           />
           <Input
-            value={data.cvc || ""}
+            value={values.cvc || ""}
             type="tel"
             name="cvc"
             placeholder="CVC"
@@ -135,6 +149,15 @@ const Form = () => {
             required
           />
         </Row>
+        {errors.cvc && <Error>{errors.cvc}</Error>}
+        {errors.expiry && <Error>{errors.expiry}</Error>}
+        <Button onClick={() => handleSubmit()} type="submit">
+          Submit
+        </Button>
+        <JsonWrapper>
+          <h3>Values</h3>
+          <pre>{JSON.stringify(values, 0, 2)}</pre>
+        </JsonWrapper>
       </FormWrapper>
     </Wrapper>
   );
